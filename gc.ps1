@@ -1,1 +1,1 @@
-git commit 
+git commit $args
