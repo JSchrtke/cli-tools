@@ -7,5 +7,5 @@ Requires
 --------
 * [fd - A simple, fast and user-friendly alternative to 'find'](https://github.com/sharkdp/fd)
 * [fzf - A command-line fuzzy finder](https://github.com/junegunn/fzf)
-* [bat - A cat(1) clone with wings.](A cat clone with wings.)
+* [bat - A cat clone with wings.](https://github.com/sharkdp/bat)
 
