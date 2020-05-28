@@ -1,5 +1,5 @@
 if ($args.Count -eq 0) {
-    $path = $(Resolve-Path ~).Path 
+    $path = $(Resolve-Path ~).Path
 }
 else {
     $path = Resolve-Path($args[0])
