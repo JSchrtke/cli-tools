@@ -1,0 +1,1 @@
+ls | fw -AutoSize $args
