@@ -5,4 +5,4 @@ else {
     $path = Resolve-Path($args[0])
 }
 
-$path | cd && fd | & fzf --height 50% | cd
+$destination | Set-Location && fd | fzf --height 50% | Set-Location
