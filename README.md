@@ -1,7 +1,7 @@
 cli-tools
 =========
 
-This repository contains command line tools and useful shorthands. This needs to be on the PATH.
+This repository contains personal command line tools and useful shorthands. It needs to be on the PATH.
 
 Requires
 --------
