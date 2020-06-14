@@ -5,18 +5,16 @@ else {
     $path = $args[0]
 }
 Try {
-    $destination = Resolve-Path($path) -ErrorAction Stop
+    $startingDir = Resolve-Path($path) -ErrorAction Stop
 }
 Catch {
     Write-Output $(($PWD).Path + "\" + $path + " does not exist...")
     Write-Output "Using home directory instead"
 }
 
-$originalDir = $PWD
-$fzfOutput = $($destination | Set-Location && fd | fzf --height 50%)
+$destination = $PWD
+$fzfOutput = $($startingDir | Set-Location && fd | fzf --height 50%)
 if ($fzfOutput) {
-    $fzfOutput | Set-Location
+    $destination = $fzfOutput
 }
-else {
-    $originalDir | Set-Location
-}
+$destination | Set-Location
