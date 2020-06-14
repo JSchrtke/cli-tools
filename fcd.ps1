@@ -17,4 +17,7 @@ $fzfOutput = $($startingDir | Set-Location && fd | fzf --height 50%)
 if ($fzfOutput) {
     $destination = $fzfOutput
 }
+if (!($destination | Test-Path -PathType Container)) {
+    $destination = [System.IO.Path]::GetDirectoryName($destination)
+}
 $destination | Set-Location
