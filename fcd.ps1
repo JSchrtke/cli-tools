@@ -12,4 +12,11 @@ Catch {
     Write-Output "Using home directory instead"
 }
 
-$destination | Set-Location && fd | fzf --height 50% | Set-Location
+$originalDir = $PWD
+$fzfOutput = $($destination | Set-Location && fd | fzf --height 50%)
+if ($fzfOutput) {
+    $fzfOutput | Set-Location
+}
+else {
+    $originalDir | Set-Location
+}
