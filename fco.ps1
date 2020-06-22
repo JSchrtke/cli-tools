@@ -1,13 +1,23 @@
 if ($args.Count -eq 0) {
-    $UserPath = "~"
+    $path = "~"
 }
 else {
-    $UserPath = $args[0]
+    $path = $args[0]
+}
+Try {
+    $startingDir = Resolve-Path($path) -ErrorAction Stop
+}
+Catch {
+    Write-Output $(($PWD).Path + "\" + $path + " does not exist...")
+    Write-Output "Using home directory instead"
 }
 
-$CurrentPath = ($PWD).Path
-$FilePath = $(Resolve-Path $UserPath).Path | Set-Location && & fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
-if ($FilePath) {
-    code $FilePath
+$originalDir = ($PWD).Path
+
+$fzfOutput = $($startingDir | Set-Location && fd | fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
+if ($fzfOutput) {
+    $destination = $fzfOutput
 }
-$CurrentPath | Set-Location
+code $destination
+
+$originalDir | Set-Location
