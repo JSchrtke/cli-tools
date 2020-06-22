@@ -16,8 +16,7 @@ $originalDir = ($PWD).Path
 
 $fzfOutput = $($startingDir | Set-Location && fd | fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
 if ($fzfOutput) {
-    $destination = $fzfOutput
+    code $fzfOutput
 }
-code $destination
 
 $originalDir | Set-Location
