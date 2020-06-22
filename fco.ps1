@@ -6,8 +6,8 @@ else {
 }
 
 $CurrentPath = ($PWD).Path
-$FilePath = $(Resolve-Path $UserPath).Path | cd && & fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
+$FilePath = $(Resolve-Path $UserPath).Path | Set-Location && & fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
 if ($FilePath) {
     code $FilePath
 }
-$CurrentPath | cd
+$CurrentPath | Set-Location
