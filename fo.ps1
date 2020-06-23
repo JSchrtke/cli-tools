@@ -20,7 +20,7 @@ if ($fzfOutput) {
         explorer $fzfOutput
     }
     else {
-        code $fzfOutput
+        start $fzfOutput
     }
 }
 
