@@ -1,3 +1,4 @@
+$prefilter = ""
 if ($args.Count -eq 0) {
     $path = "~"
 }
@@ -8,19 +9,18 @@ Try {
     $startingDir = Resolve-Path($path) -ErrorAction Stop
 }
 Catch {
-    Write-Output $(($PWD).Path + "\" + $path + " does not exist...")
-    Write-Output "Using home directory instead"
+    $prefilter = $path
 }
 
 $originalDir = ($PWD).Path
 
-$fzfOutput = $($startingDir | Set-Location && fd | fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
+$fzfOutput = $($startingDir | Set-Location && fd $prefilter | fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
 if ($fzfOutput) {
     if (($fzfOutput | Test-Path -PathType Container)) {
         explorer $fzfOutput
     }
     else {
-        start $fzfOutput
+        Start-Process $fzfOutput
     }
 }
 
