@@ -1,13 +1,22 @@
+$prefilter = ""
 if ($args.Count -eq 0) {
-    $UserPath = "~"
+    $path = "~"
 }
 else {
-    $UserPath = $args[0]
+    $path = $args[0]
+}
+Try {
+    $startingDir = Resolve-Path($path) -ErrorAction Stop
+}
+Catch {
+    $prefilter = $path
 }
 
-$CurrentPath = ($PWD).Path
-$FilePath = $(Resolve-Path $UserPath).Path | cd && & fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
-if ($FilePath) {
-    vim $FilePath
+$originalDir = ($PWD).Path
+
+$fzfOutput = $($startingDir | Set-Location && fd $prefilter | fzf --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
+if ($fzfOutput) {
+    vim $fzfOutput
 }
-$CurrentPath | cd
+
+$originalDir | Set-Location
