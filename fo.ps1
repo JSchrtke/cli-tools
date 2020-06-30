@@ -20,7 +20,7 @@ if ($fzfOutput) {
         explorer $fzfOutput
     }
     else {
-        Start-Process $fzfOutput
+        Start-Process $(Resolve-Path($fzfOutput)).ToString()
     }
 }
 
