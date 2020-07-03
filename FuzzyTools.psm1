@@ -19,7 +19,12 @@ function FuzzyFind {
 
     $originalDir = $PWD
 
-    $fzfOutput = $($startingDir | Set-Location && fd.exe $prefilter | fzf.exe --height 50% --preview 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500')
+    $prev = 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
+    $fzfOutput = $(
+        $startingDir |
+        Set-Location && fd.exe $hidden $prefilter |
+        fzf.exe --height 50% --preview $prev
+    )
     if ($fzfOutput) {
         $(Resolve-Path $fzfOutput).Path
     }
