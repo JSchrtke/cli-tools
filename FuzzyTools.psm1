@@ -3,6 +3,10 @@ function FuzzyFind {
     if ($args.Count -eq 0) {
         $path = "~"
     }
+    elseif ($args[0] -eq "-a") {
+        $hidden = "-uu"
+        $path = $args[1]
+    }
     else {
         $path = $args[0]
     }
