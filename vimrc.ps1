@@ -1,1 +1,1 @@
-vim $(Resolve-Path ~/.vimrc).Path
+nvim $(Resolve-Path ~/.vimrc).Path
