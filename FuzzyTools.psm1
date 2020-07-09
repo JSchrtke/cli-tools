@@ -80,7 +80,7 @@ function FuzzyOpenVim {
 
     $fuzzyOutput = FuzzyFind $args
     if ($fuzzyOutput) {
-        vim $fuzzyOutput
+        nvim $fuzzyOutput
     }
 
     $originalDir | Set-Location
