@@ -23,7 +23,7 @@ function FuzzyFind {
     $fzfOutput = $(
         $startingDir |
         Set-Location && fd.exe $hidden $prefilter |
-        fzf.exe --height 90% --layout reverse --border rounded  --preview $prev
+        fzf.exe --height 90%  --border rounded  --preview $prev
     )
     if ($fzfOutput) {
         $(Resolve-Path $fzfOutput).Path
