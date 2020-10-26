@@ -1,14 +1,14 @@
-function FuzzyFind {
+function Find($arguments) {
     $prefilter = ""
-    if ($args.Count -eq 0) {
+    if ($arguments.Count -eq 0) {
         $path = "~"
     }
-    elseif ($args[0] -eq "-a") {
+    elseif ($arguments[0] -eq "-a") {
         $hidden = "-uu"
-        $path = $args[1]
+        $path = $arguments[1]
     }
     else {
-        $path = $args[0]
+        $path = $arguments[0]
     }
     Try {
         $startingDir = Resolve-Path($path) -ErrorAction Stop
@@ -32,10 +32,13 @@ function FuzzyFind {
     $originalDir | Set-Location
 }
 
+function FuzzyFind {
+    Find($args)
+}
 New-Alias -Name f -Value FuzzyFind
 
 function FuzzySetLocation {
-    $destination = FuzzyFind $args
+    $destination = Find($args)
     if (!($destination | Test-Path -PathType Container)) {
         $destination = [System.IO.Path]::GetDirectoryName($destination)
     }
@@ -47,7 +50,7 @@ New-Alias -Name fcd -Value FuzzySetLocation
 function FuzzyOpen {
     $originalDir = ($PWD).Path
 
-    $fuzzyOutput = FuzzyFind $args
+    $fuzzyOutput = Find($args)
     if ($fuzzyOutput) {
         if (($fuzzyOutput | Test-Path -PathType Container)) {
             explorer $fuzzyOutput
@@ -65,7 +68,7 @@ New-Alias -Name fo -Value FuzzyOpen
 function FuzzyOpenCode {
     $originalDir = ($PWD).Path
 
-    $fuzzyOutput = FuzzyFind $args
+    $fuzzyOutput = Find($args)
     if ($fuzzyOutput) {
         code $fuzzyOutput
     }
@@ -78,7 +81,7 @@ New-Alias -Name fco -Value FuzzyOpenCode
 function FuzzyOpenVim {
     $originalDir = ($PWD).Path
 
-    $fuzzyOutput = FuzzyFind $args
+    $fuzzyOutput = Find($args)
     if ($fuzzyOutput) {
         nvim $fuzzyOutput
     }
