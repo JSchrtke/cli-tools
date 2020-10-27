@@ -11,7 +11,7 @@ function Find($arguments) {
         $path = $arguments[0]
     }
     Try {
-        $startingDir = Resolve-Path($path) -ErrorAction Stop
+        $startingDir = Resolve-Path -Path $path -ErrorAction Stop
     }
     Catch {
         $prefilter = $path
@@ -20,16 +20,16 @@ function Find($arguments) {
     $originalDir = $PWD
 
     $prev = 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
+    Set-Location $startingDir
     $fzfOutput = $(
-        $startingDir |
-        Set-Location && fd.exe $hidden $prefilter |
+        fd.exe $hidden $prefilter |
         fzf.exe --height 90%  --border rounded  --preview $prev
     )
     if ($fzfOutput) {
         $(Resolve-Path $fzfOutput).Path
     }
 
-    $originalDir | Set-Location
+    Set-Location $originalDir
 }
 
 function FuzzyFind {
