@@ -1,5 +1,6 @@
 function Find($arguments) {
     $prefilter = ""
+
     if ($arguments.Count -eq 0) {
         $path = "~"
     }
@@ -10,10 +11,12 @@ function Find($arguments) {
     else {
         $path = $arguments[0]
     }
+
     Try {
         $startingDir = Resolve-Path -Path $path -ErrorAction Stop
     }
     Catch {
+        $startingDir = Resolve-Path -Path "~"
         $prefilter = $path
     }
 
@@ -25,11 +28,13 @@ function Find($arguments) {
         fd.exe $hidden $prefilter |
         fzf.exe --height 90%  --border rounded  --preview $prev
     )
-    if ($fzfOutput) {
-        $(Resolve-Path $fzfOutput).Path
-    }
 
     Set-Location $originalDir
+
+    if (($fzfOutput) && ($startingDir)) {
+        $fzfOutput = Join-Path $startingDir $fzfOutput
+    }
+    Return $fzfOutput
 }
 
 function FuzzyFind {
@@ -38,11 +43,15 @@ function FuzzyFind {
 New-Alias -Name f -Value FuzzyFind
 
 function FuzzySetLocation {
+    $destination = ""
     $destination = Find($args)
-    if (!($destination | Test-Path -PathType Container)) {
-        $destination = [System.IO.Path]::GetDirectoryName($destination)
+
+    if ($destination) {
+        if (!($destination | Test-Path -PathType Container)) {
+            $destination = [System.IO.Path]::GetDirectoryName($destination)
+        }
+        $destination | Set-Location
     }
-    $destination | Set-Location
 }
 
 New-Alias -Name fcd -Value FuzzySetLocation
