@@ -66,7 +66,7 @@ function FuzzyOpen {
 
     $fuzzyOutput = Find($args)
     if ($fuzzyOutput) {
-        if (($fuzzyOutput | Test-Path -PathType Container)) {
+        if ((Test-Path -Path $fuzzyOutput -PathType Container)) {
             explorer $fuzzyOutput
         }
         else {
