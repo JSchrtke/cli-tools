@@ -31,9 +31,14 @@ function Find($arguments) {
 
     Set-Location $originalDir
 
+    if (!$fzfOutput) {
+        $startingDir = ""
+    }
+
     if (($fzfOutput) && ($startingDir)) {
         $fzfOutput = Join-Path $startingDir $fzfOutput
     }
+
     Return $fzfOutput
 }
 
