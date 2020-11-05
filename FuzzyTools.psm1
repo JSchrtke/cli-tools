@@ -26,7 +26,7 @@ function Find($arguments) {
     Set-Location $startingDir
     $fzfOutput = $(
         fd.exe $hidden $prefilter |
-        fzf.exe --height 90%  --border rounded  --preview $prev
+        fzf.exe --height 90% --border rounded
     )
 
     Set-Location $originalDir
