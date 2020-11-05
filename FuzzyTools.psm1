@@ -2,7 +2,7 @@ function Find($arguments) {
     $prefilter = ""
 
     if ($arguments.Count -eq 0) {
-        $path = "~"
+        $path = "."
     }
     elseif ($arguments[0] -eq "-a") {
         $hidden = "-uu"
