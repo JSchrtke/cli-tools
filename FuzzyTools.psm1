@@ -97,7 +97,7 @@ function FuzzyOpenVim {
 
     $fuzzyOutput = Find($args)
     if ($fuzzyOutput) {
-        nvim $fuzzyOutput
+        nvim-qt $fuzzyOutput
     }
 
     $originalDir | Set-Location
