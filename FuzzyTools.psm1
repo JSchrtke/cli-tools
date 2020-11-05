@@ -103,4 +103,4 @@ function FuzzyOpenVim {
     $originalDir | Set-Location
 }
 
-New-Alias -Name fvi -Value FuzzyOpenVim
+New-Alias -Name fn -Value FuzzyOpenVim
