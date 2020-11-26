@@ -1,32 +1,29 @@
 function Find($arguments) {
     $prefilter = ""
+    $startingDir = "."
 
-    if ($arguments.Count -eq 0) {
-        $path = "."
-    }
-    elseif ($arguments[0] -eq "-a") {
+    if ($arguments[0] -eq "-a") {
+        $arguments = $arguments[1..($arguments.Length-1)]
         $hidden = "-uu"
-        $path = $arguments[1]
     }
-    else {
-        $path = $arguments[0]
-    }
-
-    Try {
-        $startingDir = Resolve-Path -Path $path -ErrorAction Stop
-    }
-    Catch {
-        $startingDir = Resolve-Path -Path "~"
-        $prefilter = $path
+    if ($arguments.Length -gt 0) {
+        Try {
+            $startingDir = $arguments[0]
+            if ($arguments.Length -gt 1) {
+                $arguments = $arguments[1..($arguments.Length-1)]
+                $prefilter = [String]::Join(" ", $arguments)
+            }
+        } Catch {
+            $prefilter = [String]::Join(" ", $arguments)
+        }
     }
 
     $originalDir = $PWD
 
-    $prev = 'bat --style=numbers --theme=ansi-dark --color=always {} | head -500'
     Set-Location $startingDir
     $fzfOutput = $(
         fd.exe $hidden $prefilter |
-        fzf.exe --height 90% --border rounded
+        fzf.exe --height 90% --border sharp
     )
 
     Set-Location $originalDir
