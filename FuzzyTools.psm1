@@ -23,7 +23,7 @@ function Find($arguments) {
     Set-Location $startingDir
     $fzfOutput = $(
         fd.exe $hidden $prefilter |
-        fzf.exe --height 90% --border sharp
+        fzf.exe --preview 'bat --style=numbers --color=always --line-range :500 {}' --preview-window up:40%:noborder --height 90% --border sharp
     )
 
     Set-Location $originalDir
