@@ -52,11 +52,17 @@ function FuzzySetLocation {
         if (!($destination | Test-Path -PathType Container)) {
             $destination = [System.IO.Path]::GetDirectoryName($destination)
         }
-        $destination | Set-Location
+        Push-Location -Path $destination
     }
 }
 
 New-Alias -Name fcd -Value FuzzySetLocation
+
+function GoBack {
+    Pop-Location
+}
+
+New-Alias -Name .. -Value GoBack
 
 function FuzzyOpen {
     $originalDir = ($PWD).Path
